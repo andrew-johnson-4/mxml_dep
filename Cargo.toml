@@ -8,3 +8,6 @@ edition = "2018"
 readme = "README.md"
 repository = "https://github.com/andrew-johnson-4/mxml_dep"
 keywords = ["xml","html","templating","library"]
+
+[dependencies]
+html_parser = "0.4.2"

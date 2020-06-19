@@ -1,18 +1,44 @@
 
 use html_parser::{Dom, Node, Result, Element, ElementVariant};
 
-pub enum Edit {
-   AddId(String),
-   AddClass(String),
-   AddAttribute(String,String),
+#[derive(Clone)]
+pub enum Find {
+   ChildElement
 }
-
+#[derive(Clone)]
 pub enum Match {
    HasTag(String),
    HasId(String),
    HasClass(String),
    HasAttribute(String),
    HasAttributeValue(String,String)
+}
+#[derive(Clone)]
+pub enum Edit {
+   AddId(String),
+   AddClass(String),
+   AddAttribute(String,String),
+}
+
+#[derive(Clone)]
+pub struct FindElement {
+   pub find: Vec<Find>
+}
+#[derive(Clone)]
+pub struct MatchElement {
+   pub when: Vec<Match>
+}
+#[derive(Clone)]
+pub struct EditElement {
+   pub edit: Vec<Edit>
+}
+
+#[derive(Clone)]
+pub struct FindMatchEditElement {
+   pub fme: Vec<(FindElement,MatchElement,EditElement)>
+}
+
+pub fn fme(_d: &mut Dom, _fme: &FindMatchEditElement) {
 }
 
 pub fn parse(es: &str) -> Result<Dom> {

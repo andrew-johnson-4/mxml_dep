@@ -38,7 +38,20 @@ pub struct FindMatchEditElement {
    pub fme: Vec<(FindElement,MatchElement,EditElement)>
 }
 
-pub fn fme(_d: &mut Dom, _fme: &FindMatchEditElement) {
+pub fn fme(d: &mut Dom, fme: &FindMatchEditElement) {
+   for mut n in d.children.iter_mut() {
+      fme_node(&mut n, fme);
+   }
+}
+pub fn fme_node(n: &mut Node, fme: &FindMatchEditElement) {
+   match n {
+      Node::Element(ref mut e) => {
+         fme_element(e, fme)
+      },
+      _ => {}
+   }
+}
+pub fn fme_element(_e: &mut Element, _fme: &FindMatchEditElement) {
 }
 
 pub fn parse(es: &str) -> Result<Dom> {

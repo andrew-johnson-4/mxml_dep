@@ -1,6 +1,20 @@
 
 use html_parser::{Dom, Node, Result, Element, ElementVariant};
 
+pub enum Edit {
+   AddId(String),
+   AddClass(String),
+   AddAttribute(String,String),
+}
+
+pub enum Match {
+   HasTag(String),
+   HasId(String),
+   HasClass(String),
+   HasAttribute(String),
+   HasAttributeValue(String,String)
+}
+
 pub fn parse(es: &str) -> Result<Dom> {
    Dom::parse(es)
 }

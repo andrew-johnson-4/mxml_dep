@@ -77,6 +77,33 @@ impl FindMatchEditElement {
          unparse(&d)
       } else { xml.to_string() }
    }
+   pub fn then(self, other: Self) -> FindMatchEditElements {
+      FindMatchEditElements {
+         fmes: vec![ self, other ]
+      }
+   }
+}
+
+pub struct FindMatchEditElements {
+   pub fmes: Vec<FindMatchEditElement>
+}
+impl FindMatchEditElements {
+   pub fn then(self, other: FindMatchEditElement) -> FindMatchEditElements {
+      let FindMatchEditElements { mut fmes } = self;
+      fmes.push(other);
+      FindMatchEditElements {
+         fmes: fmes
+      }
+   }
+   pub fn mixin(&self, xml: &str) -> String {
+      let mut d = parse(xml);
+      if let Ok(ref mut d) = d {
+         for s in self.fmes.iter() {
+            fme(d, s);
+         }
+         unparse(&d)
+      } else { xml.to_string() }
+   }
 }
 
 pub fn fme(d: &mut Dom, fme: &FindMatchEditElement) {

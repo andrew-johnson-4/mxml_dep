@@ -138,7 +138,9 @@ pub fn unparse_element(e: &Element) -> String {
       es.push_str(&format!(r#" class="{}""#, e.classes.join(" ")));
    }
 
-   for (k,v) in e.attributes.iter() {
+   let mut kvs: Vec<_> = e.attributes.iter().collect();
+   kvs.sort_by(|x,y| x.0.cmp(&y.0));
+   for (k,v) in kvs.iter() {
       if let Some(v) = v {
          es.push_str(&format!(r#" {}="{}""#, k, v.replace("\"","\\\"")));
       } else {

@@ -84,20 +84,12 @@ pub fn fme_node(n: &mut Node, fme: &FindMatchEditElement) {
    }
 }
 pub fn fme_element(el: &mut Element, fme: &FindMatchEditElement) {
-   let mut fme = fme.fme.clone();
-   if let Some((f,m,e)) = fme.pop() {
+   for (f,m,e) in fme.fme.iter() {
       if f.find.iter().all(|f| f.matches(el)) &&
          m.when.iter().all(|m| m.matches(el)) {
          for ed in e.edit.iter() {
             ed.apply(el)
          }
-      }
-   }
-   if fme.len()>0 {
-      for mut c in el.children.iter_mut() {
-         fme_node(&mut c, &FindMatchEditElement {
-            fme: fme.clone()
-         });
       }
    }
 }

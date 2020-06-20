@@ -84,11 +84,19 @@ pub fn fme_node(n: &mut Node, fme: &FindMatchEditElement) {
    }
 }
 pub fn fme_element(el: &mut Element, fme: &FindMatchEditElement) {
-   for (f,m,e) in fme.fme.iter() {
+   if let Some((f,m,e)) = fme.fme.first() {
       if f.find.iter().all(|f| f.matches(el)) &&
          m.when.iter().all(|m| m.matches(el)) {
          for ed in e.edit.iter() {
             ed.apply(el)
+         }
+      }
+      if fme.fme.len()>1 {
+         let fme = FindMatchEditElement {
+            fme: fme.fme.get(1..).unwrap().to_vec()
+         };
+         for mut n in el.children.iter_mut() {
+            fme_node(&mut n, &fme);
          }
       }
    }

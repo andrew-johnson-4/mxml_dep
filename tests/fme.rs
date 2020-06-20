@@ -84,3 +84,24 @@ fn fme5() {
       r#"<div class="d" b="c">a</div><p>b</p>"#
    );
 }
+
+#[test]
+fn fme6() {
+   let mut xml = parse(r#"<div><p>b</p></div>"#).unwrap();
+   let m = FindMatchEditElement {
+      fme: vec![(
+         FindElement{find:vec![Find::ChildElement]},
+         MatchElement{when:vec![]},
+         EditElement{edit:vec![]}
+      ),(
+         FindElement{find:vec![Find::ChildElement]},
+         MatchElement{when:vec![]},
+         EditElement{edit:vec![Edit::AddClass("d".to_string())]}
+      )]
+   };
+   fme(&mut xml, &m);
+   assert_eq!(
+      unparse(&xml),
+      r#"<div><p class="d">b</p></div>"#
+   );
+}

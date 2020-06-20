@@ -90,11 +90,15 @@ pub fn fme_element(el: &mut Element, fme: &FindMatchEditElement) {
          for ed in e.edit.iter() {
             ed.apply(el)
          }
-      }
-      if fme.fme.len()>1 {
-         let fme = FindMatchEditElement {
-            fme: fme.fme.get(1..).unwrap().to_vec()
-         };
+         if fme.fme.len()>1 {
+            let fme = FindMatchEditElement {
+               fme: fme.fme.get(1..).unwrap().to_vec()
+            };
+            for mut n in el.children.iter_mut() {
+               fme_node(&mut n, &fme);
+            }
+         }
+      } else {
          for mut n in el.children.iter_mut() {
             fme_node(&mut n, &fme);
          }

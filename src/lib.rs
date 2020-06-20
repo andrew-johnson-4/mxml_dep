@@ -93,6 +93,13 @@ pub fn fme_element(el: &mut Element, fme: &FindMatchEditElement) {
          }
       }
    }
+   if fme.len()>0 {
+      for mut c in el.children.iter_mut() {
+         fme_node(&mut c, &FindMatchEditElement {
+            fme: fme.clone()
+         });
+      }
+   }
 }
 
 pub fn parse(es: &str) -> Result<Dom> {

@@ -57,7 +57,7 @@ fn fme4() {
    let m = FindMatchEditElement {
       fme: vec![(
          FindElement{find:vec![Find::ChildElement]},
-         MatchElement{when:vec![Match::HasAttribute("b".to_string())]},
+         MatchElement{when:vec![Match::HasAttributeValue("b".to_string(),"".to_string())]},
          EditElement{edit:vec![Edit::AddClass("d".to_string())]}
       )]
    };

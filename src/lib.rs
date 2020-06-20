@@ -18,7 +18,6 @@ pub enum Match {
    HasTag(String),
    HasId(String),
    HasClass(String),
-   HasAttribute(String),
    HasAttributeValue(String,String)
 }
 impl Match {
@@ -27,8 +26,10 @@ impl Match {
          Match::HasTag(t) => { &e.name == t },
          Match::HasId(id) => { e.id == Some(id.to_string()) },
          Match::HasClass(c) => { e.classes.iter().any(|cc| c==cc) },
-         Match::HasAttribute(k) => { e.attributes.contains_key(k) },
-         Match::HasAttributeValue(k,v) => { e.attributes.get(k) == Some(&Some(v.to_string())) },
+         Match::HasAttributeValue(k,v) => { 
+            (v.len()==0 && e.attributes.contains_key(k)) ||
+            e.attributes.get(k) == Some(&Some(v.to_string()))
+         },
       }
    }
 }

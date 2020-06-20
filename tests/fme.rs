@@ -13,6 +13,6 @@ fn fme1() {
    fme(&mut xml, &m);
    assert_eq!(
       unparse(&xml),
-      r#"<div class="d"></div><p>b</p>"#
+      r#"<div class="d">a</div><p>b</p>"#
    );
 }

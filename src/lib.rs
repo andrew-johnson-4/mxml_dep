@@ -6,7 +6,7 @@ pub enum Find {
    ChildElement
 }
 impl Find {
-   fn matches(&self, e: &Element) -> bool {
+   fn matches(&self, _e: &Element) -> bool {
       match self {
          Find::ChildElement => { true }
       }
@@ -24,11 +24,11 @@ pub enum Match {
 impl Match {
    fn matches(&self, e: &Element) -> bool {
       match self {
-         Match::HasTag(t) => { true },
-         Match::HasId(id) => { true },
-         Match::HasClass(c) => { true },
-         Match::HasAttribute(k) => { true },
-         Match::HasAttributeValue(k,v) => { true },
+         Match::HasTag(t) => { &e.name == t },
+         Match::HasId(id) => { e.id == Some(id.to_string()) },
+         Match::HasClass(c) => { e.classes.iter().any(|cc| c==cc) },
+         Match::HasAttribute(k) => { e.attributes.contains_key(k) },
+         Match::HasAttributeValue(k,v) => { e.attributes.get(k) == Some(&Some(v.to_string())) },
       }
    }
 }
@@ -41,6 +41,14 @@ pub enum Edit {
 }
 impl Edit {
    fn apply(&self, e: &mut Element) {
+      match self {
+         Edit::AddId(id) => { e.id = Some(id.to_string()); },
+         Edit::AddClass(c) => { e.classes.push(c.to_string()); },
+         Edit::AddAttribute(k,v) => {
+            if v.len()==0 { e.attributes.insert(k.to_string(),None); }
+            else { e.attributes.insert(k.to_string(),Some(v.to_string())); }
+         },
+      }
    }
 }
 

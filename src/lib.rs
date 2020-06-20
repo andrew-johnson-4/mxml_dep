@@ -69,6 +69,15 @@ pub struct EditElement {
 pub struct FindMatchEditElement {
    pub fme: Vec<(FindElement,MatchElement,EditElement)>
 }
+impl FindMatchEditElement {
+   pub fn mixin(&self, xml: &str) -> String {
+      let mut d = parse(xml);
+      if let Ok(ref mut d) = d {
+         fme(d, self);
+         unparse(&d)
+      } else { xml.to_string() }
+   }
+}
 
 pub fn fme(d: &mut Dom, fme: &FindMatchEditElement) {
    for mut n in d.children.iter_mut() {

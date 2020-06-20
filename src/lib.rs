@@ -5,6 +5,14 @@ use html_parser::{Dom, Node, Result, Element, ElementVariant};
 pub enum Find {
    ChildElement
 }
+impl Find {
+   fn matches(&self, e: &Element) -> bool {
+      match self {
+         Find::ChildElement => { true }
+      }
+   }
+}
+
 #[derive(Clone)]
 pub enum Match {
    HasTag(String),
@@ -13,11 +21,27 @@ pub enum Match {
    HasAttribute(String),
    HasAttributeValue(String,String)
 }
+impl Match {
+   fn matches(&self, e: &Element) -> bool {
+      match self {
+         Match::HasTag(t) => { true },
+         Match::HasId(id) => { true },
+         Match::HasClass(c) => { true },
+         Match::HasAttribute(k) => { true },
+         Match::HasAttributeValue(k,v) => { true },
+      }
+   }
+}
+
 #[derive(Clone)]
 pub enum Edit {
    AddId(String),
    AddClass(String),
    AddAttribute(String,String),
+}
+impl Edit {
+   fn apply(&self, e: &mut Element) {
+   }
 }
 
 #[derive(Clone)]
@@ -51,7 +75,16 @@ pub fn fme_node(n: &mut Node, fme: &FindMatchEditElement) {
       _ => {}
    }
 }
-pub fn fme_element(_e: &mut Element, _fme: &FindMatchEditElement) {
+pub fn fme_element(el: &mut Element, fme: &FindMatchEditElement) {
+   let mut fme = fme.fme.clone();
+   if let Some((f,m,e)) = fme.pop() {
+      if f.find.iter().all(|f| f.matches(el)) &&
+         m.when.iter().all(|m| m.matches(el)) {
+         for ed in e.edit.iter() {
+            ed.apply(el)
+         }
+      }
+   }
 }
 
 pub fn parse(es: &str) -> Result<Dom> {

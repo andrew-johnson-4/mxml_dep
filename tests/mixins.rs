@@ -17,7 +17,7 @@ fn mixin1() {
    let m2 = FindMatchEditElement {
       fme: vec![(
          FindElement{find:vec![]},
-         MatchElement{when:vec![Match::HasAttributeValue("b".to_string(),"".to_string())]},
+         MatchElement{when:vec![Match::HasAttribute("b".to_string(),"".to_string())]},
          EditElement{edit:vec![Edit::AddAttribute("c".to_string(),"".to_string())]}
       )]
    };
@@ -46,14 +46,14 @@ fn mixin2() {
    let m2 = FindMatchEditElement {
       fme: vec![(
          FindElement{find:vec![]},
-         MatchElement{when:vec![Match::HasAttributeValue("b".to_string(),"".to_string())]},
+         MatchElement{when:vec![Match::HasAttribute("b".to_string(),"".to_string())]},
          EditElement{edit:vec![Edit::AddAttribute("c".to_string(),"".to_string())]}
       )]
    };
    let m3 = FindMatchEditElement {
       fme: vec![(
          FindElement{find:vec![]},
-         MatchElement{when:vec![Match::HasAttributeValue("c".to_string(),"".to_string())]},
+         MatchElement{when:vec![Match::HasAttribute("c".to_string(),"".to_string())]},
          EditElement{edit:vec![Edit::AddAttribute("d".to_string(),"".to_string())]}
       )]
    };

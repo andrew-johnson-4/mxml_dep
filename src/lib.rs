@@ -16,19 +16,19 @@ impl Find {
 #[derive(Clone)]
 pub enum Match {
    HasTag(String),
-   HasId(String),
-   HasClass(String),
-   HasAttributeValue(String,String)
+   HasAttribute(String,String)
 }
 impl Match {
    fn matches(&self, e: &Element) -> bool {
       match self {
          Match::HasTag(t) => { &e.name == t },
-         Match::HasId(id) => { e.id == Some(id.to_string()) },
-         Match::HasClass(c) => { e.classes.iter().any(|cc| c==cc) },
-         Match::HasAttributeValue(k,v) => { 
-            (v.len()==0 && e.attributes.contains_key(k)) ||
-            e.attributes.get(k) == Some(&Some(v.to_string()))
+         Match::HasAttribute(k,v) => { 
+            if k=="id" { e.id == Some(v.to_string()) }
+            else if k=="class" { e.classes.iter().any(|cc| v==cc) }
+            else {
+               (v.len()==0 && e.attributes.contains_key(k)) ||
+               e.attributes.get(k) == Some(&Some(v.to_string()))
+            }
          },
       }
    }
@@ -36,17 +36,15 @@ impl Match {
 
 #[derive(Clone)]
 pub enum Edit {
-   AddId(String),
-   AddClass(String),
    AddAttribute(String,String),
 }
 impl Edit {
    fn apply(&self, e: &mut Element) {
       match self {
-         Edit::AddId(id) => { e.id = Some(id.to_string()); },
-         Edit::AddClass(c) => { e.classes.push(c.to_string()); },
          Edit::AddAttribute(k,v) => {
-            if v.len()==0 { e.attributes.insert(k.to_string(),None); }
+            if k=="id" { e.id = Some(v.to_string()); }
+            else if k=="class" { e.classes.push(v.to_string()); }
+            else if v.len()==0 { e.attributes.insert(k.to_string(),None); }
             else { e.attributes.insert(k.to_string(),Some(v.to_string())); }
          },
       }

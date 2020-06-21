@@ -27,7 +27,7 @@ fn parse2() {
    let m = FindMatchEditElement {
       fme: vec![(
          FindElement{find:vec![]},
-         MatchElement{when:vec![Match::HasAttributeValue("a".to_string(),"".to_string())]},
+         MatchElement{when:vec![Match::HasAttribute("a".to_string(),"".to_string())]},
          EditElement{edit:vec![]},
       ),(
          FindElement{find:vec![]},

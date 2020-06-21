@@ -7,7 +7,7 @@ fn fme1() {
       fme: vec![(
          FindElement{find:vec![Find::ChildElement]},
          MatchElement{when:vec![Match::HasTag("div".to_string())]},
-         EditElement{edit:vec![Edit::AddClass("d".to_string())]}
+         EditElement{edit:vec![Edit::AddAttribute("class".to_string(),"d".to_string())]}
       )]
    };
    fme(&mut xml, &m);
@@ -23,8 +23,8 @@ fn fme2() {
    let m = FindMatchEditElement {
       fme: vec![(
          FindElement{find:vec![Find::ChildElement]},
-         MatchElement{when:vec![Match::HasId("b".to_string())]},
-         EditElement{edit:vec![Edit::AddClass("d".to_string())]}
+         MatchElement{when:vec![Match::HasAttribute("id".to_string(),"b".to_string())]},
+         EditElement{edit:vec![Edit::AddAttribute("class".to_string(),"d".to_string())]}
       )]
    };
    fme(&mut xml, &m);
@@ -40,8 +40,8 @@ fn fme3() {
    let m = FindMatchEditElement {
       fme: vec![(
          FindElement{find:vec![Find::ChildElement]},
-         MatchElement{when:vec![Match::HasClass("b".to_string())]},
-         EditElement{edit:vec![Edit::AddClass("d".to_string())]}
+         MatchElement{when:vec![Match::HasAttribute("class".to_string(),"b".to_string())]},
+         EditElement{edit:vec![Edit::AddAttribute("class".to_string(),"d".to_string())]}
       )]
    };
    fme(&mut xml, &m);
@@ -57,8 +57,8 @@ fn fme4() {
    let m = FindMatchEditElement {
       fme: vec![(
          FindElement{find:vec![Find::ChildElement]},
-         MatchElement{when:vec![Match::HasAttributeValue("b".to_string(),"".to_string())]},
-         EditElement{edit:vec![Edit::AddClass("d".to_string())]}
+         MatchElement{when:vec![Match::HasAttribute("b".to_string(),"".to_string())]},
+         EditElement{edit:vec![Edit::AddAttribute("class".to_string(),"d".to_string())]}
       )]
    };
    fme(&mut xml, &m);
@@ -74,8 +74,8 @@ fn fme5() {
    let m = FindMatchEditElement {
       fme: vec![(
          FindElement{find:vec![Find::ChildElement]},
-         MatchElement{when:vec![Match::HasAttributeValue("b".to_string(),"c".to_string())]},
-         EditElement{edit:vec![Edit::AddClass("d".to_string())]}
+         MatchElement{when:vec![Match::HasAttribute("b".to_string(),"c".to_string())]},
+         EditElement{edit:vec![Edit::AddAttribute("class".to_string(),"d".to_string())]}
       )]
    };
    fme(&mut xml, &m);
@@ -96,7 +96,7 @@ fn fme6() {
       ),(
          FindElement{find:vec![Find::ChildElement]},
          MatchElement{when:vec![]},
-         EditElement{edit:vec![Edit::AddClass("d".to_string())]}
+         EditElement{edit:vec![Edit::AddAttribute("class".to_string(),"d".to_string())]}
       )]
    };
    fme(&mut xml, &m);
